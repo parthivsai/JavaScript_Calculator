@@ -45,6 +45,60 @@ class Calculator {
         break;
       default:
         return;
+    clear(){
+        this.current.innerHTML = ''
+        this.previous.innerHTML = ''
+        this.operation=undefined
+    }
+    updatedisplay(){
+        this.current.innerHTML = this.current.innerHTML
+        this.previous.innerText = this.previous.innerHTML 
+    }
+    chooseoperation(operation){
+        if(this.current.innerHTML ==='')return
+        if(this.previous.innerHTML !==''){
+            this.compute()
+        }
+        this.operation = operation
+        this.previous.innerHTML = this.current.innerHTML
+        this.current.innerHTML =''
+    }
+    compute(){
+         let result
+         const prev = parseFloat(this.previous.innerHTML)
+         const cur = parseFloat(this.current.innerHTML)
+         switch(this.operation){
+             case '+':
+                 result = prev+cur
+                 break
+             case '-':
+                 result = prev-cur
+                 break
+             case '*':
+                 result = prev*cur
+                 break
+             case '÷':
+                 result = prev/cur
+                 break
+             default:
+                 return
+         }
+         this.current.innerHTML = result
+         this.previous.innerHTML=''
+         this.operation = undefined
+    }
+    
+    numberappend(number,answered){
+        if(number==="."&& this.current.innerHTML.includes('.'))return
+        if(answered===true){
+            this.current.innerHTML = number
+            return
+        }
+        this.current.innerHTML = this.current.innerHTML+number
+
+    }
+    delete(){
+        this.current.innerHTML = this.current.innerHTML.toString().slice(0,-1)
     }
     this.current.innerHTML = result;
     this.previous.innerHTML = "";
@@ -108,3 +162,4 @@ deleteButton.addEventListener("click", () => {
   calculator.delete();
   calculator.updatedisplay();
 });
+=======
