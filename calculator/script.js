@@ -9,11 +9,6 @@ class Calculator {
         this.previous.innerHTML = ''
         this.operation=undefined
     }
-    numberappend(number){
-        if(number==="."&& this.current.innerHTML.includes('.'))return
-        this.current.innerHTML = this.current.innerHTML+number
-
-    }
     updatedisplay(){
         this.current.innerHTML = this.current.innerHTML
         this.previous.innerText = this.previous.innerHTML 
@@ -51,6 +46,16 @@ class Calculator {
          this.previous.innerHTML=''
          this.operation = undefined
     }
+    
+    numberappend(number,answered){
+        if(number==="."&& this.current.innerHTML.includes('.'))return
+        if(answered===true){
+            this.current.innerHTML = number
+            return
+        }
+        this.current.innerHTML = this.current.innerHTML+number
+
+    }
     delete(){
         this.current.innerHTML = this.current.innerHTML.toString().slice(0,-1)
     }
@@ -66,11 +71,13 @@ const current = document.querySelector('[data-current]')
 const previous = document.querySelector('[data-previous]')
 
 const calculator = new Calculator(previous,current)
+let answered = Boolean
 
 numberButtons.forEach(button =>{
     button.addEventListener('click',() => {
-        calculator.numberappend(button.innerText)
+        calculator.numberappend(button.innerText,answered)
         calculator.updatedisplay()
+        answered =false
     })
 })
 operationButtons.forEach(button =>{
@@ -87,8 +94,10 @@ clearButton.addEventListener('click',()=>{
 equalsButton.addEventListener('click',()=>{
     calculator.compute()
     calculator.updatedisplay()
+    answered = true
 })
 deleteButton.addEventListener('click',()=>{
     calculator.delete()
     calculator.updatedisplay()
+    
 })
